@@ -10,48 +10,68 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class View extends Application {
 
-    TextField inputTextField;
-    TextField outputTextField;
+    ComboBox<String> conversionComboBox;
 
-    Button button;
+    TextField decimalTextField;
+    TextField binaryTextField;
+    TextField octalTextField;
+    TextField hexadecimalTextField;
+    TextField convertedTextField;
+
+    Button decimalToBinaryButton;
+    Button decimalToOctalButton;
+    Button decimalToHexadecimalButton;
+    Button convertButton;
 
     Label decimalLabel,
           binaryLabel,
           hexadecimalLabel,
-          octalLabel
+          octalLabel,
+          conversionLabel,
+          convertedLabel
     ;
 
     @Override
     public void start(Stage stage) throws IOException {
 
+
+        // Create UI elements
+        decimalLabel = new Label("Decimal");
+        decimalTextField = new TextField();
+        decimalToBinaryButton = new Button("Decimal to Binary");
+
+        conversionLabel = new Label("Conversion");
+        conversionComboBox = new ComboBox<>();
+        conversionComboBox.getItems().addAll("Binary","Octal","Hexadecimal");
+
+        convertButton = new Button("Convert");
+
+        convertedLabel = new Label("Converted");
+        convertedTextField = new TextField();
+        convertedTextField.setEditable(false);
+
+        // Create layout
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10,10,10,10));
-        grid.setVgap(10);
         grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setAlignment(Pos.CENTER);
 
-        inputTextField = new TextField();
-        inputTextField.setPromptText("Enter a number");
-        inputTextField.setPrefWidth(150);
-        inputTextField.setAlignment(Pos.CENTER_LEFT);
-        inputTextField.setStyle("-fx-prompt-text-fill: #000000;");
+        // Add elements to the layout
+        grid.add(decimalLabel, 0, 0);
+        grid.add(decimalTextField, 1, 0);
+        grid.add(conversionLabel, 0, 1);
+        grid.add(conversionComboBox, 1, 1);
+        grid.add(convertButton, 2, 1);
+        grid.add(convertedLabel, 0, 2);
+        grid.add(convertedTextField, 1, 2);
 
-        ComboBox <String> comboBox = new ComboBox<>();
-        comboBox.setItems(FXCollections.observableArrayList("Decimal","Binary","Hexadecimal","Octal"));
-        comboBox.setPromptText("Select an option");
-        GridPane.setConstraints(comboBox,0,1);
-
-
-        button = new Button("Convert");
-        GridPane.setConstraints(button,0,2);
-
-        grid.getChildren().addAll(inputTextField,button,comboBox);
 
         Scene scene = new Scene(grid, 300, 300);
         stage.setTitle("Calculator");
