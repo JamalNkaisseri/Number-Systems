@@ -15,6 +15,8 @@ import java.io.IOException;
 
 public class View extends Application {
 
+    Logic logic = new Logic();
+
     ComboBox<String> decimalConversionComboBox;
     ComboBox<String> binaryConversionComboBox;
     ComboBox<String> octalConversionComboBox;
@@ -58,13 +60,28 @@ public class View extends Application {
         // Create decimal UI elements
         decimalLabel = new Label("Decimal");
         decimalTextField = new TextField();
-       // decimalToBinaryButton = new Button("Decimal to Binary");
+
 
         decimalConversionLabel = new Label("Conversion");
         decimalConversionComboBox = new ComboBox<>();
         decimalConversionComboBox.getItems().addAll("Binary","Octal","Hexadecimal");
 
         decimalConvertButton = new Button("Convert");
+        decimalConvertButton.setOnAction(actionEvent -> {
+            String selectedOperation = decimalConversionComboBox.getValue();
+
+            if(selectedOperation.equals("Binary")){
+                logic.decToBinary(decimalTextField,decimalConvertedTextField);
+            }
+
+            if(selectedOperation.equals("Octal")){
+                logic.decToOctal(decimalTextField,decimalConvertedTextField);
+            }
+
+            if(selectedOperation.equals("Hexadecimal")){
+                logic.decToHexadecimal(decimalTextField,decimalConvertedTextField);
+            }
+        });
 
         decimalConvertedLabel = new Label("Converted");
         decimalConvertedTextField = new TextField();
@@ -79,6 +96,22 @@ public class View extends Application {
         binaryConversionComboBox.getItems().addAll("Decimal","Octal","Hexadecimal");
 
         binaryConvertButton = new Button("Convert");
+        binaryConvertButton.setOnAction(actionEvent -> {
+
+            String selectedOperation = binaryConversionComboBox.getValue();
+
+            if(selectedOperation.equals("Decimal")){
+                logic.binaryToDec(binaryTextField,binaryConvertedTextField);
+            }
+
+            if(selectedOperation.equals("Octal")){
+                logic.binaryToOctal(binaryTextField,binaryConvertedTextField);
+            }
+
+            if(selectedOperation.equals("Hexadecimal")){
+                logic.binaryToHexadecimal(binaryTextField,binaryConvertedTextField);
+            }
+        });
 
         binaryConvertedLabel =  new Label("Converted");
         binaryConvertedTextField = new TextField();
@@ -93,6 +126,22 @@ public class View extends Application {
         octalConversionComboBox.getItems().addAll("Decimal","Binary","Hexadecimal");
 
         octalConvertButton = new Button("Convert");
+        octalConvertButton.setOnAction(actionEvent -> {
+
+            String selectedOperation = octalConversionComboBox.getValue();
+
+            if(selectedOperation.equals("Decimal")){
+                logic.octalToDecimal(octalTextField,octalConvertedTextField);
+            }
+
+            if(selectedOperation.equals("Binary")){
+                logic.octalToBinary(octalTextField,octalConvertedTextField);
+            }
+
+            if(selectedOperation.equals("Hexadecimal")){
+                logic.octalToHexadecimal(octalTextField,octalConvertedTextField);
+            }
+        });
 
         octalConvertedLabel = new Label("Converted");
         octalConvertedTextField = new TextField();
@@ -104,9 +153,25 @@ public class View extends Application {
 
         hexadecimalConversionLabel = new Label("Conversion");
         hexadecimalConversionComboBox = new ComboBox<>();
-        hexadecimalConversionComboBox.getItems().addAll("Decimal","Binary","Hexadecimal");
+        hexadecimalConversionComboBox.getItems().addAll("Decimal","Binary","Octal");
 
         hexadecimalConvertButton = new Button("Convert");
+        hexadecimalConvertButton.setOnAction(actionEvent -> {
+
+            String selectedOperation = hexadecimalConversionComboBox.getValue();
+
+            if(selectedOperation.equals("Decimal")){
+                logic.hexadecimalToDecimal(hexadecimalTextField,hexadecimalConvertedTextField);
+            }
+
+            if(selectedOperation.equals("Binary")){
+                logic.hexadecimalToBinary(hexadecimalTextField,hexadecimalConvertedTextField);
+            }
+
+            if(selectedOperation.equals("Octal")){
+                logic.hexadecimalToOctal(hexadecimalTextField,hexadecimalConvertedTextField);
+            }
+        });
 
         hexadecimalConvertedLabel = new Label("Converted");
         hexadecimalConvertedTextField = new TextField();
@@ -157,7 +222,7 @@ public class View extends Application {
         grid.add(hexadecimalConvertedTextField,1,14);
 
 
-        Scene scene = new Scene(grid, 400, 200);
+        Scene scene = new Scene(grid, 600, 600);
         stage.setTitle("Calculator");
         stage.setScene(scene);
         stage.show();
